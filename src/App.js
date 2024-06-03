@@ -60,17 +60,24 @@ function App() {
     // if we return a function from the useEffect, that function will run when the component unmounts
 
     */
-
+/* eslint-disable */  
     useEffect(() => {
-        const handleMessage = (event) => {
-            if (event.data && event.data.type === "ACCESS_TOKEN") {
-                setAccessToken(event.data.accessToken);
-            }
-        };
-        window.addEventListener("message", handleMessage);
-        return () => window.removeEventListener("message", handleMessage);
+        const url = window.location.href;
+        const regex = /#access_token=([^&]+)/;
+        const match = regex.exec(url);
+        if (match) {
+            setAccessToken(match[1]);
+            console.log(match);
+        }
     }, []);
 
+    const handle = () => {
+        const url = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${scope}&response_type=token`;
+        console.log("hello");
+        console.log(window.location);
+        chrome.tabs.create({ url });
+    };
+/* eslint-disable */
     return (
         <>
             <section className="border-red-700 rounded-2xl w-[500px] min-h-screen bg-gradient-to-br from-cyan-800 to-green-700 flex flex-col justify-center ">
@@ -79,12 +86,7 @@ function App() {
                         <section className="text-4xl text-white self-center mt-12 font-light">
                             Login to Spotify
                         </section>
-                        <a
-                            className="self-center"
-                            href={`https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${scope}&response_type=token`}
-                        >
-                            <Button />
-                        </a>
+                        <Button onClick={handle} />
                     </>
                 ) : (
                     <>

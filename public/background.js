@@ -1,6 +1,16 @@
 console.log("Background script running...");
 
-chrome.webRequest.onBeforeRequest.addListener(
+chrome.runtime.onInstalled.addListener(() => {
+    console.log("Extension installed");
+});
+
+chrome.action.onClicked.addListener((tab) => {
+    chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ["content.js"],
+    });
+});
+/*chrome.webRequest.onBeforeRequest.addListener(
     function (details) {
         const url = details.url;
         const regex = /#access_token=([^&]+)/;
@@ -21,3 +31,12 @@ chrome.webRequest.onBeforeRequest.addListener(
     { urls: ["<all_urls>"] },
     ["blocking"]
 );
+*/
+chrome.action.onClicked.addListener((tab) => {
+    chrome.scripting
+        .executeScript({
+            target: { tabId: getTabId() },
+            files: ["content.js"],
+        })
+        .then(() => console.log("script injected"));
+});

@@ -8,9 +8,14 @@
         "default_popup": "index.html",
         "default_title": "EasyLike"
     },
-    "permissions": ["easylike://*"],
+    "permissions": ["activeTab", "scripting"],
     "background": {
-        "scripts": ["background.js"],
-        "persistent": false
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch*", "easylike://*"],
+      "js": ["content.js"]
     }
+  ]
 }
