@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
-import Button from "./components/button";
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
-const REDIRECT_URI = "https://easylike.token";
-const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
 const scope = encodeURIComponent("user-library-modify");
 
 function App() {
     const [accessToken, setAccessToken] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    /*eslint-disable */
+
+    /* global chrome */ // This is to prevent the linter from throwing an error
 
     const handleLogin = () => {
         chrome.identity.launchWebAuthFlow(
@@ -82,8 +79,6 @@ function App() {
         );
     }, [searchResults]);
 
-    /* eslint-disable */
-
     const handleLike = (trackId) => {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
@@ -105,13 +100,18 @@ function App() {
 
     return (
         <>
-            <section className="w-[500px] min-h-screen bg-gradient-to-br from-cyan-900 to-green-950 flex flex-col justify-center ">
+            <section className="w-[500px] min-h-screen bg-gradient-to-br from-[#020221] to-black flex flex-col justify-center ">
                 {!accessToken ? (
                     <>
                         <section className="text-4xl text-white self-center mt-12 font-light">
                             Login to Spotify
                         </section>
-                        <Button onClick={handleLogin} />
+                        <button
+                            className="bg-gradient-to-br from-[#191625] to-[#0c012d] border border-[#514bff] hover:bg-gradient-to-t hover:from-[#000440] hover:to-[#011045] text-white font-bold m-12 p-4 rounded-xl w-fit self-center"
+                            onClick={() => handleLogin()}
+                        >
+                            Login
+                        </button>
                     </>
                 ) : !searchResults ? (
                     <>
@@ -123,7 +123,7 @@ function App() {
                             {searchResults.map((tracks, index) => (
                                 <button
                                     onClick={() => handleLike(tracks.id)}
-                                    className="flex p-4 m-2 border items-center rounded-3xl border-cyan-500 w-[480px] hover:bg-gradient-to-t from-cyan-800 to-cyan-900 text-cyan-200 mx-2 font-light text-xl font-sans"
+                                    className="flex p-4 m-2 border items-center rounded-3xl border-cyan-500 w-[480px] hover:bg-gradient-to-t hover:from-[#000440] hover:to-[#021763] text-cyan-200 mx-2 font-light text-xl font-sans"
                                 >
                                     <img
                                         className="mx-2 rounded-xl w-[64px]"
