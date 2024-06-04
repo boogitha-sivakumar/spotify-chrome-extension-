@@ -114,11 +114,12 @@ function App() {
             .catch((error) => {
                 console.log("Error liking track:", error);
             });
+        return <section>Track Liked!</section>;
     };
 
     return (
         <>
-            <section className="w-[500px] min-h-screen bg-gradient-to-br from-cyan-800 to-green-900 flex flex-col justify-center ">
+            <section className="w-[500px] min-h-screen bg-gradient-to-br from-cyan-900 to-green-950 flex flex-col justify-center ">
                 {!accessToken ? (
                     <>
                         <section className="text-4xl text-white self-center mt-12 font-light">
@@ -135,15 +136,16 @@ function App() {
                         <section>
                             {searchResults.map((tracks, index) => (
                                 <button
-                                    onClick={handleLike(tracks.id)}
-                                    className="flex p-2 m-2 border"
+                                    onClick={() => handleLike(tracks.id)}
+                                    className="flex p-4 m-2 border items-center rounded-3xl border-cyan-500 w-[480px] hover:bg-gradient-to-t from-cyan-800 to-cyan-900 text-cyan-200 mx-2 font-light text-xl font-sans"
                                 >
                                     <img
-                                        width={64}
-                                        height={64}
-                                        src={tracks.album.images[2]}
+                                        className="mx-2 rounded-xl w-[64px]"
+                                        src={tracks.album.images[1].url}
                                     />
-                                    <section>{tracks.name}</section>
+                                    <section className="mx-2">
+                                        {tracks.name}
+                                    </section>
                                 </button>
                             ))}
                         </section>

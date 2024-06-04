@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
