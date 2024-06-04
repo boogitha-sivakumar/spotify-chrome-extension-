@@ -11,7 +11,7 @@
     "author": "Sam Shervin S, Boogitha S",
     "action": {
         "default_popup": "index.html",
-        "default_title": "EasyLike"
+        "default_title": "YouTune"
     },
     "permissions": ["activeTab", "scripting", "identity", "tabs"]
 }
