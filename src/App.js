@@ -26,7 +26,6 @@ function App() {
                     /[#&]access_token=([^&]*)/
                 )[1];
                 setAccessToken(accessToken);
-                console.log("AccessToken Successfully Set!");
             }
         );
     };
@@ -54,11 +53,6 @@ function App() {
                     )
                     .then((response) => {
                         setSearchResults(response.data.tracks.items);
-                        console.log(
-                            "Search Results:",
-                            response.data.tracks.items
-                        );
-
                         // Handle the response data here
                     })
                     .catch((error) => {
@@ -71,13 +65,6 @@ function App() {
         }
         getTracks();
     }, [accessToken]);
-
-    useEffect(() => {
-        console.log(
-            "searchResults: let's see, if it works, it works",
-            searchResults
-        );
-    }, [searchResults]);
 
     const handleLike = (trackId) => {
         const headers = {

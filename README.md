@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# YouTune: A Chrome Extension for Liking Songs on Spotify from YouTube
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## How to Use YouTune
 
-## Available Scripts
+### Getting Started
 
-In the project directory, you can run:
+1. **Create a Spotify App**:
 
-### `npm start`
+    - Visit the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) and log in.
+    - Click on "Create an App" and follow the instructions.
+    - Note the **Client ID** and **Client Secret** provided by Spotify.
+    - Set the **Redirect URI** as shown in the extension and paste it into the appropriate place on the Spotify Developer Dashboard.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. **Setup Environment Variables**:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    - Create a `.env` file in the root directory of the project.
+    - Add the following lines to the `.env` file:
+        ```plaintext
+        CLIENT_ID=your_spotify_client_id
+        CLIENT_SECRET=your_spotify_client_secret  # Optional if contributing to extension
+        ```
 
-### `npm test`
+3. **Install Dependencies**:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - Use one of the following commands to install the necessary dependencies:
+        ```bash
+        npm install
+        # or
+        npm i
+        # or
+        yarn add
+        # or
+        pnpm i
+        # or
+        pnpm install
+        ```
 
-### `npm run build`
+4. **Build the Project**:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    - For a production build, use:
+        ```bash
+        pnpm run build
+        ```
+    - For debugging, you can use:
+        ```bash
+        nodemon
+        ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+5. **Load the Extension into Chrome**:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    - Open Chrome and navigate to `chrome://extensions`.
+    - Turn on **Developer mode** using the toggle switch in the upper right corner.
+    - Click on **Load Unpacked** and select the `build` folder created during the build step.
 
-### `npm run eject`
+6. **Using the Extension**:
+    - With the extension loaded, you can now browse YouTube.
+    - When you find a song you like, simply click on it and the extension will automatically like the song on Spotify.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## About YouTune
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**YouTune** is a Chrome extension designed to enhance your music browsing experience on YouTube by integrating with Spotify. It allows you to effortlessly like songs on Spotify while watching music videos on YouTube.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Key Features
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+-   **Spotify Integration**: Utilizes the Spotify API and OAuth 2.0 for seamless liking of songs.
+-   **Automatic Liking**: Click on a song in YouTube, and it will be automatically liked on Spotify.
+-   **Environment Configuration**: Easily configurable through a `.env` file for storing your Spotify Client ID and Client Secret.
+-   **Build Tools**: Use modern JavaScript build tools and package managers like npm, yarn, or pnpm.
+-   **Chrome Extension**: Easily loadable into Chrome through the Developer mode for quick and easy access.
 
-## Learn More
+### Technical Details
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+-   **Spotify API and OAuth 2.0**: The extension uses Spotify's API for liking songs and handles authentication through OAuth 2.0.
+-   **ESLint Configuration**: Managed with custom ESLint configurations to ensure code quality and compatibility, e.g., `/* global chrome */`.
+-   **No Background or Content Scripts**: The extension operates without the need for background.js or content.js files.
+-   **Automatic Build with Nodemon**: Utilizes nodemon to automatically execute the build process whenever files are saved or changed.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+By following the setup instructions and utilizing the key features, YouTune offers a streamlined and efficient way to manage your music preferences across YouTube and Spotify. Happy listening!
