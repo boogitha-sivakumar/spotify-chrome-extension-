@@ -16,8 +16,8 @@
     - Create a `.env` file in the root directory of the project.
     - Add the following lines to the `.env` file:
         ```plaintext
-        CLIENT_ID=your_spotify_client_id
-        CLIENT_SECRET=your_spotify_client_secret  # Optional if contributing to extension
+        REACT_APP_CLIENT_ID=your_spotify_client_id
+        REACT_APP_CLIENT_SECRET=your_spotify_client_secret  # Optional if contributing to extension
         ```
 
 3. **Install Dependencies**:
@@ -63,7 +63,6 @@
 ### Key Features
 
 -   **Spotify Integration**: Utilizes the Spotify API and OAuth 2.0 for seamless liking of songs.
--   **Automatic Liking**: Click on a song in YouTube, and it will be automatically liked on Spotify.
 -   **Environment Configuration**: Easily configurable through a `.env` file for storing your Spotify Client ID and Client Secret.
 -   **Build Tools**: Use modern JavaScript build tools and package managers like npm, yarn, or pnpm.
 -   **Chrome Extension**: Easily loadable into Chrome through the Developer mode for quick and easy access.
