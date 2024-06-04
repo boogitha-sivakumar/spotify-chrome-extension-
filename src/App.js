@@ -82,20 +82,6 @@ function App() {
         );
     }, [searchResults]);
 
-    // empty array means that this useEffect will only run once when the component mounts
-    // use effect is a hook that lets you perform side effects in function components
-    // it runs after the component has rendered
-    // it is used to fetch data, subscribe to events, or manipulate the DOM directly
-    // right now we are using it to fetch the access token from the Spotify API.
-    // it runs as soon as the component mounts because of the empty array
-
-    // how else con we modify the empty array?
-    // we can add a dependency to the array
-    // if we add a variable to the array, the useEffect will run every time that variable changes
-    // if we add multiple variables to the array, the useEffect will run every time any of the variables change
-    // if we remove the array, the useEffect will run every time the component renders
-    // if we return a function from the useEffect, that function will run when the component unmounts
-
     /* eslint-disable */
 
     const handleLike = (trackId) => {
