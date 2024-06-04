@@ -11,7 +11,7 @@ const scope = encodeURIComponent("user-library-modify");
 
 function App() {
     const [accessToken, setAccessToken] = useState("");
-    const [searchResults, setSearchResults] = useState({});
+    const [searchResults, setSearchResults] = useState([]);
     /*eslint-disable */
 
     const handleLogin = () => {
@@ -29,34 +29,60 @@ function App() {
                     /[#&]access_token=([^&]*)/
                 )[1];
                 setAccessToken(accessToken);
+                console.log("AccessToken Successfully Set!");
             }
         );
     };
-  
-    useEffect(async () => {
-        const title = (
-            await chrome.tabs.query({ active: true, currentWindow: true })
-        )[0].title;
-        const encodedTitle = encodeURIComponent(title); // Encode the title to ensure URL safety
 
-        // API Access Token
-        const headers = {
-            Authorization: `Bearer ${accessToken}`,
-        };
+    useEffect(() => {
+        async function getTracks() {
+            if (accessToken) {
+                const title = (
+                    await chrome.tabs.query({
+                        active: true,
+                        currentWindow: true,
+                    })
+                )[0].title;
+                const encodedTitle = encodeURIComponent(title); // Encode the title to ensure URL safety
+                console.log(encodedTitle);
+                // API Access Token
+                const headers = {
+                    Authorization: `Bearer ${accessToken}`,
+                };
 
-        axios
-            .get(
-                `https://api.spotify.com/v1/search?q=${encodedTitle}&type=track&limit=10`,
-                { headers }
-            )
-            .then((response) => {
-                setSearchResults(response.data);
-                // Handle the response data here
-            })
-            .catch((error) => {
-                console.error("Error fetching data from Spotify API:", error);
-            });
-    }, [accessToken]); // empty array means that this useEffect will only run once when the component mounts
+                axios
+                    .get(
+                        `https://api.spotify.com/v1/search?q=${encodedTitle}&type=track&limit=10`,
+                        { headers }
+                    )
+                    .then((response) => {
+                        setSearchResults(response.data.tracks.items);
+                        console.log(
+                            "Search Results:",
+                            response.data.tracks.items
+                        );
+
+                        // Handle the response data here
+                    })
+                    .catch((error) => {
+                        console.log(
+                            "Error fetching data from Spotify API:",
+                            error
+                        );
+                    });
+            }
+        }
+        getTracks();
+    }, [accessToken]);
+
+    useEffect(() => {
+        console.log(
+            "searchResults: let's see, if it works, it works",
+            searchResults
+        );
+    }, [searchResults]);
+
+    // empty array means that this useEffect will only run once when the component mounts
     // use effect is a hook that lets you perform side effects in function components
     // it runs after the component has rendered
     // it is used to fetch data, subscribe to events, or manipulate the DOM directly
@@ -72,21 +98,55 @@ function App() {
 
     /* eslint-disable */
 
-    
+    const handleLike = (trackId) => {
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        axios
+            .put(
+                `https://api.spotify.com/v1/me/tracks?ids=${trackId}`,
+                {},
+                { headers }
+            )
+            .then((response) => {
+                console.log("Track liked!");
+            })
+            .catch((error) => {
+                console.log("Error liking track:", error);
+            });
+    };
+
     return (
         <>
-            <section className="border-red-700 rounded-2xl w-[500px] min-h-screen bg-gradient-to-br from-cyan-800 to-green-700 flex flex-col justify-center ">
+            <section className="w-[500px] min-h-screen bg-gradient-to-br from-cyan-800 to-green-900 flex flex-col justify-center ">
                 {!accessToken ? (
                     <>
                         <section className="text-4xl text-white self-center mt-12 font-light">
                             Login to Spotify
                         </section>
-                        <Button id="login" onClick={handleLogin} />
+                        <Button onClick={handleLogin} />
+                    </>
+                ) : !searchResults ? (
+                    <>
+                        <section className="text-white">Logged in</section>
                     </>
                 ) : (
                     <>
-                        <section>Your access token is </section>
-                        <section className="text-white">{accessToken}</section>
+                        <section>
+                            {searchResults.map((tracks, index) => (
+                                <button
+                                    onClick={handleLike(tracks.id)}
+                                    className="flex p-2 m-2 border"
+                                >
+                                    <img
+                                        width={64}
+                                        height={64}
+                                        src={tracks.album.images[2]}
+                                    />
+                                    <section>{tracks.name}</section>
+                                </button>
+                            ))}
+                        </section>
                     </>
                 )}
             </section>
