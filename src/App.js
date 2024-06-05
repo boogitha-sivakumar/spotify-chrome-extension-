@@ -8,15 +8,15 @@ const scope = encodeURIComponent("user-library-modify");
 function App() {
     const [accessToken, setAccessToken] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [redirect_uri, setRedirectUri] = useState("");
 
     /* global chrome */ // This is to prevent the linter from throwing an error
 
     const handleLogin = () => {
+        
         chrome.identity.launchWebAuthFlow(
             {
-                url: `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&redirect_uri=${chrome.identity
-                    .getRedirectURL()
-                    .slice(0, -1)}&scope=${scope}&response_type=token`,
+                url: `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&redirect_uri=${redirect_uri}&scope=${scope}&response_type=token`,
                 interactive: true,
             },
             (redirectUri) => {
@@ -31,6 +31,7 @@ function App() {
     };
 
     useEffect(() => {
+        setRedirectUri(chrome.identity.getRedirectURL().slice(0, -1));
         async function getTracks() {
             if (accessToken) {
                 const title = (
@@ -88,9 +89,20 @@ function App() {
     return (
         <>
             <section className="w-[500px] min-h-screen bg-gradient-to-br from-[#020221] to-black flex flex-col justify-center ">
+                <section className="text-6xl font-light w-full text-center text-cyan-100 my-10">
+                    YouTune
+                </section>
+                {redirect_uri && !accessToken ? (
+                    <section className="text-sm text-white self-center mt-2 font-light text-center mb-8">
+                        <section className="text-lg">Redirect URI</section>
+                        {redirect_uri}
+                    </section>
+                ) : (
+                    ""
+                )}
                 {!accessToken ? (
                     <>
-                        <section className="text-4xl text-white self-center mt-12 font-light">
+                        <section className="text-4xl text-white self-center mt-2 font-light">
                             Login to Spotify
                         </section>
                         <button
